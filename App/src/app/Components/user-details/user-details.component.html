@@ -1,0 +1,34 @@
+<table *ngIf="trenutniUser">
+    <thead>
+    <tr>
+      <th>Id</th>
+      <th>Username</th>
+      <th>Password</th>
+      <th>Roles</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>{{trenutniUser["id"]}}</td>
+      <td>{{trenutniUser["username"]}}</td>
+      <td>{{trenutniUser["password"]}}</td>
+      <td>{{trenutniUser["roles"]}}</td>
+    </tr>
+    </tbody>
+  </table>
+  
+  <div *ngIf="loginService.validateRoles(['ROLE_ADMIN']) && trenutniUser">
+    <p>Izmeni usera</p>
+    <form (ngSubmit)="izmeni()">
+      <input type="text" value="trenutniUser.username" name="username" placeholder="Username" [(ngModel)]="trenutniUser.username" required="true">
+      <br>
+      <input type="password" value="trenutniUser.password" name="password" placeholder="Password" [(ngModel)]="trenutniUser.password" required="true">
+      <br>
+      <input type="checkbox" name="admin" value="ROLE_ADMIN" (change)="dodajRole($event)">Admin
+      <br>
+      <input type="checkbox" name="user" value="ROLE_USER" (change)="dodajRole($event)">User
+      <br>
+      <input type="submit" value="Dodaj usera">
+    </form>
+  </div>
+  

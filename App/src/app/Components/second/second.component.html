@@ -1,0 +1,70 @@
+
+<div *ngIf="loginService.validateRoles(['ROLE_ADMIN', 'ROLE_USER'])">
+    <p>Dodaj nov file</p>
+    <form (ngSubmit)="dodavanje(formaTask.value)" ngNativeValidate [formGroup]="formaTask">
+      <input type="text"  placeholder="Title" formControlName="title" required>
+      <br>
+      <input type="textarea" placeholder="Description" formControlName="description" required>
+      <br>
+      <input type="text" placeholder="Status" formControlName="status" required>
+      <br>
+      <input type="submit" value="Dodaj task">
+    </form>
+  </div>
+  
+  <table>
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Directory</th>
+      <th>Size</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let t of tasks">
+      <td>{{t["title"]}}</td>
+      <td>{{t["description"]}}</td>
+      <td>{{t["status"]}}</td>
+      <td>
+        <button *ngIf="loginService.validateRoles(['ROLE_ADMIN', 'ROLE_USER'])" (click)="brisanje(t['id'])">Brisanje</button>
+        <button (click)="detalji(t['id'])">Detalji</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  
+  <br>
+  <br>
+
+
+  <div *ngIf="loginService.validateRoles(['ROLE_ADMIN', 'ROLE_USER'])" cdkDropListGroup>
+    <div class="example-container">
+      <h2>Progress</h2>
+  
+      <div
+        cdkDropList
+        [cdkDropListData]="progress"
+        class="example-list"
+        (cdkDropListDropped)="drop($event)">
+        <div class="example-box" *ngFor="let item of progress" cdkDrag>{{item["title"]}}/{{item["status"]}}</div>
+      </div>
+    </div>
+  
+    <div class="example-container">
+      <h2>D2</h2>
+  
+      <div
+        cdkDropList
+        [cdkDropListData]="done"
+        class="example-list"
+        (cdkDropListDropped)="drop($event)">
+        <div class="example-box" *ngFor="let item of done" cdkDrag>{{item["title"]}}/{{item["status"]}}</div>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  
+  
